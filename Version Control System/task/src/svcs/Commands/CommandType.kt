@@ -1,6 +1,9 @@
-package svcs
+package svcs.commands
 
-enum class Commands(val helpText: String) {
+import svcs.hyperSkillFlag
+import svcs.programName
+
+enum class CommandType(val helpText: String) {
     HELP("Prints this help"),
     CONFIG("Get and set a username."),
     ADD("Add a file to the index."),
@@ -11,7 +14,7 @@ enum class Commands(val helpText: String) {
     companion object {
         fun printHelp() {
             println("These are $programName commands:")
-            entries.drop(if (hyperSkill) 1 else 0)
+            entries.drop(if (hyperSkillFlag) 1 else 0)
                 .forEach {
                     println(it.name.lowercase().padEnd(11) + it.helpText)
                 }
