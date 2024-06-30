@@ -1,8 +1,6 @@
 package svcs
 
-import svcs.commands.CommandType
-import svcs.commands.add
-import svcs.commands.config
+import svcs.commands.*
 
 const val programName = "SVCS"
 const val hyperSkillFlag = true
@@ -15,8 +13,8 @@ fun main(args: Array<String>) {
         CommandType.HELP -> CommandType.printHelp()
         CommandType.CONFIG -> config(args.drop(1))
         CommandType.ADD -> add(args.drop(1))
-        CommandType.LOG -> println(cmd.helpText)
-        CommandType.COMMIT -> println(cmd.helpText)
+        CommandType.LOG -> log(args.drop(1))
+        CommandType.COMMIT -> commit(args.drop(1))
         CommandType.CHECKOUT -> println(cmd.helpText)
         null -> TODO()
         else -> TODO()
