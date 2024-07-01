@@ -4,8 +4,7 @@ import svcs.fh
 import java.io.File
 
 fun add(args: List<String>) {
-    val indexFile = fh.indexFile
-    val files = fh.getIndex(indexFile).toMutableSet()
+    val files = fh.getIndex().toMutableSet()
     if (args.isEmpty()) {
         if (files.isEmpty()) {
             println(CommandType.ADD.helpText)
@@ -22,5 +21,5 @@ fun add(args: List<String>) {
             println("Can't find '$fileName'.")
         }
     }
-    fh.writeIndex(indexFile, files)
+    fh.writeIndex(files)
 }

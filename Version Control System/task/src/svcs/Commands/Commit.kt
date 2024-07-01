@@ -14,7 +14,7 @@ fun commit(args: List<String>) {
         return
     }
     val msg = args[0]
-    val indexedFiles = fh.getIndex(fh.indexFile).toMutableSet()
+    val indexedFiles = fh.getIndex().toMutableSet()
     if (indexedFiles.isEmpty()) {
         println("No files added to index")
         println("Use '$programName add' to include files to be tracked")
@@ -27,7 +27,7 @@ fun commit(args: List<String>) {
 //    println(previousHash)
 
     if (hash != previousHash) {
-//        println("hash diff, comitting")
+//        println("hash diff, commiting")
         val author = fh.getMap(fh.configFile)["author"] ?: "Unknown"
         commits.add(0, Commit(hash, author, msg))
         fh.writeCommit(hash, indexedFiles)

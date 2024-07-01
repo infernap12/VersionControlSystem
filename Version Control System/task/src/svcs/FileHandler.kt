@@ -20,9 +20,9 @@ class FileHandler {
         map.entries.map { "\n${it.key}: ${it.value}" }.forEach(file::appendText)
     }
 
-    fun getIndex(indexFile: File): List<File> = indexFile.readLines().drop(1).map { File(it) }
+    fun getIndex(): List<File> = indexFile.readLines().drop(1).map { File(it) }
 
-    fun writeIndex(indexFile: File, files: Set<File>) {
+    fun writeIndex(files: Set<File>) {
         indexFile.writeText(indexHeader)
         files.forEach { indexFile.appendText("\n${it.canonicalPath}") }
     }
@@ -47,6 +47,22 @@ class FileHandler {
             val msg = it[2]
             Commit(hash, author, msg)
         }
+
+    fun checkOut(hash: String) {
+        val checkoutTarget = File(vcs, hash)
+        if (!checkoutTarget.exists() || !checkoutTarget.isDirectory) {
+            throw IllegalStateException("What the hell")
+        }
+
+        val sourceFiles = checkoutTarget.listFiles()!!.toList()
+
+        val indexedFiles = fh.getIndex()
+
+        for (file in sourceFiles) {
+            file.copyTo(indexedFiles.first { it.name == file.name }, true)
+        }
+
+    }
 
     private val vcs = File("vcs") // vcs folder
     val configFile = File(vcs, "config.txt")
